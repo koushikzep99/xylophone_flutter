@@ -1,62 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audio_cache.dart';
 
 void main() {
-  runApp(MaterialApp(home: Xylophone()));
+  runApp(
+    MaterialApp(
+      home: Scaffold(
+        body: SafeArea(child: XyloBody()),
+      ),
+    ),
+  );
 }
 
-class Xylophone extends StatelessWidget {
+class XyloBody extends StatelessWidget {
+  void playSound(int soundNumber) {
+    final player = AudioCache();
+    player.play('wavfiles/note$soundNumber.wav');
+  }
+
+  Expanded expandedKeys(int soundNumber, Color color) {
+    return Expanded(
+      child: FlatButton(
+        onPressed: () {
+          playSound(soundNumber);
+        },
+        child: null,
+        color: color,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Expanded(
-              child: Container(
-                color: Colors.red,
-                width: double.infinity,
-              ),
-            ),
-            Expanded(
-              child: Container(
-                color: Colors.amber[800],
-                width: double.infinity,
-              ),
-            ),
-            Expanded(
-              child: Container(
-                color: Colors.yellow,
-                width: double.infinity,
-              ),
-            ),
-            Expanded(
-              child: Container(
-                color: Colors.green[600],
-                width: double.infinity,
-              ),
-            ),
-            Expanded(
-              child: Container(
-                color: Colors.teal[800],
-                width: double.infinity,
-              ),
-            ),
-            Expanded(
-              child: Container(
-                color: Colors.blue,
-                width: double.infinity,
-              ),
-            ),
-            Expanded(
-              child: Container(
-                color: Colors.purple,
-                width: double.infinity,
-              ),
-            ),
-          ],
-        ),
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        expandedKeys(1, Colors.red),
+        expandedKeys(2, Colors.orange),
+        expandedKeys(3, Colors.yellow),
+        expandedKeys(4, Colors.green),
+        expandedKeys(5, Colors.teal[800]),
+        expandedKeys(6, Colors.blue),
+        expandedKeys(7, Colors.purple)
+      ],
     );
   }
 }
